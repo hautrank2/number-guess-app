@@ -90,7 +90,7 @@
       --popover-foreground: 236 231 209;
 
       /* PALETTE (keep identity) */
-      --primary: 204 139 14;
+      --primary: 255 168 0;
       /* #8A7650 */
       --primary-foreground: 255 255 255;
 
@@ -124,7 +124,7 @@
       --android-popover: 72 65 49;
       --android-popover-foreground: 236 231 209;
 
-      --android-primary: 138 118 80;
+      --android-primary: 255 168 0;
       --android-primary-foreground: 255 255 255;
 
       --android-secondary: 142 151 125;
