@@ -1,10 +1,11 @@
 import { Button } from "@/components/nativewindui/Button";
 import { Text } from "@/components/nativewindui/Text";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
 
 type GameScreenProps = {
   number: number;
+  onGameOver: () => void;
 };
 
 const generateRandomBetween = (min: number, max: number, exclude: number) => {
@@ -19,7 +20,7 @@ const generateRandomBetween = (min: number, max: number, exclude: number) => {
 let minBoundary = 1;
 let maxBoundary = 100;
 
-const GameScreen = ({ number }: GameScreenProps) => {
+const GameScreen = ({ number, onGameOver }: GameScreenProps) => {
   const initNumber = generateRandomBetween(1, 99, number);
   const [currentGuess, setCurrentGuess] = useState(initNumber);
 
@@ -48,6 +49,12 @@ const GameScreen = ({ number }: GameScreenProps) => {
 
     setCurrentGuess(newRandomNumber);
   };
+
+  useEffect(() => {
+    if (currentGuess === number) {
+      onGameOver();
+    }
+  }, [currentGuess, number, onGameOver]);
 
   return (
     <View style={styles.container}>

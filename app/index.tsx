@@ -1,10 +1,24 @@
 import React, { useState } from "react";
 import { ImageBackground, StyleSheet } from "react-native";
 import GameScreen from "./NumberGuessGame/GameScreen";
+import OverGameScreen from "./NumberGuessGame/OverGameScreen";
 import StartGameScreen from "./NumberGuessGame/StartGameScreen";
 
 const AppIndex = () => {
   const [number, setNumber] = useState<number | null>(null);
+  const [isGameOver, setIsGameOver] = useState(false);
+
+  let component = <StartGameScreen onConfirmNumber={setNumber} />;
+
+  if (isGameOver) {
+    component = <OverGameScreen />;
+  }
+
+  if (number !== null && !isGameOver) {
+    component = (
+      <GameScreen number={number} onGameOver={() => setIsGameOver(true)} />
+    );
+  }
 
   return (
     <ImageBackground
@@ -12,11 +26,7 @@ const AppIndex = () => {
       resizeMode="cover"
       style={styles.screen}
     >
-      {number === null ? (
-        <StartGameScreen onConfirmNumber={setNumber} />
-      ) : (
-        <GameScreen number={number} />
-      )}
+      {component}
     </ImageBackground>
   );
 };

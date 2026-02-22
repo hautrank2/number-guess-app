@@ -39,6 +39,7 @@ const StartGameScreen = ({ onConfirmNumber }: StartGameScreenProps) => {
         onChangeText={setValue}
         maxLength={2}
         style={styles.numberInput}
+        className="text-primary border-primary border-b-2"
       />
 
       <View className="w-full flex justify-between gap-2 flex-row mt-4">
@@ -71,21 +72,19 @@ const styles = StyleSheet.create({
   panel: {
     display: "flex",
     alignItems: "center",
+    borderRadius: 16,
     marginTop: 120,
     marginHorizontal: 24,
     paddingHorizontal: 16,
     paddingVertical: 32,
     backgroundColor: "rgba(0, 0, 0, 0.4)",
-    borderRadius: 16,
   },
   numberInput: {
     fontSize: 32,
     fontWeight: "bold",
     width: 44,
-    borderBottomColor: "#8A7650",
     borderBottomWidth: 2,
     padding: 0,
     marginVertical: 0,
-    color: "#8A7650",
   },
 });
