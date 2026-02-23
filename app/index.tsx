@@ -7,16 +7,32 @@ import StartGameScreen from "./NumberGuessGame/StartGameScreen";
 const AppIndex = () => {
   const [number, setNumber] = useState<number | null>(null);
   const [isGameOver, setIsGameOver] = useState(false);
+  const [roundNumber, setRoundNumber] = useState(0);
 
   let component = <StartGameScreen onConfirmNumber={setNumber} />;
 
-  if (isGameOver) {
-    component = <OverGameScreen />;
+  if (isGameOver && number) {
+    component = (
+      <OverGameScreen
+        roundNumber={roundNumber}
+        enterNumber={number}
+        onStartNewGame={() => {
+          setIsGameOver(false);
+          setNumber(null);
+        }}
+      />
+    );
   }
 
   if (number !== null && !isGameOver) {
     component = (
-      <GameScreen number={number} onGameOver={() => setIsGameOver(true)} />
+      <GameScreen
+        number={number}
+        onGameOver={(rounds: number) => {
+          setIsGameOver(true);
+          setRoundNumber(rounds);
+        }}
+      />
     );
   }
 

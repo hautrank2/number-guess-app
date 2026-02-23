@@ -1,5 +1,6 @@
 import { Button } from "@/components/nativewindui/Button";
 import { Text } from "@/components/nativewindui/Text";
+import { Title } from "@/components/title";
 import React, { useRef, useState } from "react";
 import { Alert, StyleSheet, TextInput, View } from "react-native";
 
@@ -32,6 +33,9 @@ const StartGameScreen = ({ onConfirmNumber }: StartGameScreenProps) => {
 
   return (
     <View style={styles.panel}>
+      <Title>Start game</Title>
+
+      <Text className="font-xl text-center mt-4">Enter a Number</Text>
       <TextInput
         ref={inputRef}
         defaultValue={value}
