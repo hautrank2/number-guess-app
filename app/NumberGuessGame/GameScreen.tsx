@@ -1,11 +1,17 @@
 import { Button } from "@/components/nativewindui/Button";
 import { Text } from "@/components/nativewindui/Text";
 import React, { useEffect, useState } from "react";
-import { Alert, StyleSheet, useWindowDimensions, View } from "react-native";
+import {
+  Alert,
+  FlatList,
+  StyleSheet,
+  useWindowDimensions,
+  View,
+} from "react-native";
 
 type GameScreenProps = {
   number: number;
-  onGameOver: () => void;
+  onGameOver: (logRounds: number) => void;
 };
 
 const generateRandomBetween = (min: number, max: number, exclude: number) => {
@@ -23,6 +29,7 @@ let maxBoundary = 100;
 const GameScreen = ({ number, onGameOver }: GameScreenProps) => {
   const initNumber = generateRandomBetween(1, 99, number);
   const [currentGuess, setCurrentGuess] = useState(initNumber);
+  const [logNumbers, setLogNumbers] = useState([initNumber]);
 
   const dimentions = useWindowDimensions();
 
@@ -53,11 +60,12 @@ const GameScreen = ({ number, onGameOver }: GameScreenProps) => {
     );
 
     setCurrentGuess(newRandomNumber);
+    setLogNumbers((prev) => [newRandomNumber, ...prev]);
   };
 
   useEffect(() => {
     if (currentGuess === number) {
-      onGameOver();
+      onGameOver(logNumbers.length);
     }
   }, [currentGuess, number, onGameOver]);
 
@@ -127,6 +135,25 @@ const GameScreen = ({ number, onGameOver }: GameScreenProps) => {
           </Button>
         </View>
       </View>
+
+      <View className="flex-1 p-4">
+        <Text className="text-lg">Logs:</Text>
+        <FlatList
+          data={logNumbers}
+          keyExtractor={(item) => item.toString()}
+          renderItem={({ item, index }) => (
+            <View
+              key={item}
+              className="bg-secondary p-2 rounded w-full flex flex-row justify-between mt-2"
+            >
+              <Text>#{index + 1}</Text>
+              <Text>
+                {"Opponent's Guess:"} <Text className="font-bold">{item}</Text>
+              </Text>
+            </View>
+          )}
+        />
+      </View>
     </View>
   );
 };
@@ -148,5 +175,6 @@ const styles = StyleSheet.create({
     paddingVertical: 32,
     backgroundColor: "rgba(0, 0, 0, 0.64)",
     borderRadius: 16,
+    marginTop: 16,
   },
 });
