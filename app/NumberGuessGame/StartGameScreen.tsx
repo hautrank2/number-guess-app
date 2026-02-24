@@ -1,7 +1,14 @@
 import { Button } from "@/components/nativewindui/Button";
 import { Text } from "@/components/nativewindui/Text";
 import React, { useRef, useState } from "react";
-import { Alert, StyleSheet, TextInput, View } from "react-native";
+import {
+  Alert,
+  KeyboardAvoidingView,
+  ScrollView,
+  StyleSheet,
+  TextInput,
+  View,
+} from "react-native";
 
 type StartGameScreenProps = {
   onConfirmNumber: (number: number) => void;
@@ -31,38 +38,42 @@ const StartGameScreen = ({ onConfirmNumber }: StartGameScreenProps) => {
   };
 
   return (
-    <View style={styles.panel}>
-      <TextInput
-        ref={inputRef}
-        defaultValue={value}
-        keyboardType="numeric"
-        onChangeText={setValue}
-        maxLength={2}
-        style={styles.numberInput}
-        className="text-primary border-primary border-b-2"
-      />
+    <ScrollView>
+      <KeyboardAvoidingView behavior="position">
+        <View style={styles.panel}>
+          <TextInput
+            ref={inputRef}
+            defaultValue={value}
+            keyboardType="numeric"
+            onChangeText={setValue}
+            maxLength={2}
+            style={styles.numberInput}
+            className="text-primary border-primary border-b-2"
+          />
 
-      <View className="w-full flex justify-between gap-2 flex-row mt-4">
-        <View className="flex-1">
-          <Button
-            className="w-full"
-            variant="primary"
-            onPress={() => onReset()}
-          >
-            <Text>Reset</Text>
-          </Button>
+          <View className="w-full flex justify-between gap-2 flex-row mt-4">
+            <View className="flex-1">
+              <Button
+                className="w-full"
+                variant="primary"
+                onPress={() => onReset()}
+              >
+                <Text>Reset</Text>
+              </Button>
+            </View>
+            <View className="flex-1">
+              <Button
+                className="w-full"
+                variant="primary"
+                onPress={() => onConfirm()}
+              >
+                <Text>Confirm</Text>
+              </Button>
+            </View>
+          </View>
         </View>
-        <View className="flex-1">
-          <Button
-            className="w-full"
-            variant="primary"
-            onPress={() => onConfirm()}
-          >
-            <Text>Confirm</Text>
-          </Button>
-        </View>
-      </View>
-    </View>
+      </KeyboardAvoidingView>
+    </ScrollView>
   );
 };
 

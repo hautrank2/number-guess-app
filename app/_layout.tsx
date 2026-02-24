@@ -26,7 +26,9 @@ export default function RootLayout() {
         <NavThemeProvider
           value={NAV_THEME[isDarkColorScheme ? "dark" : "light"]}
         >
-          <Stack screenOptions={{ headerShown: false }} />
+          <Stack
+            screenOptions={{ headerShown: false, orientation: "default" }}
+          />
         </NavThemeProvider>
       </KeyboardProvider>
     </>

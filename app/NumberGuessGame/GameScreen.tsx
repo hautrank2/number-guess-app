@@ -1,7 +1,7 @@
 import { Button } from "@/components/nativewindui/Button";
 import { Text } from "@/components/nativewindui/Text";
 import React, { useEffect, useState } from "react";
-import { Alert, StyleSheet, View } from "react-native";
+import { Alert, StyleSheet, useWindowDimensions, View } from "react-native";
 
 type GameScreenProps = {
   number: number;
@@ -23,6 +23,11 @@ let maxBoundary = 100;
 const GameScreen = ({ number, onGameOver }: GameScreenProps) => {
   const initNumber = generateRandomBetween(1, 99, number);
   const [currentGuess, setCurrentGuess] = useState(initNumber);
+
+  const dimentions = useWindowDimensions();
+
+  console.log(dimentions);
+  const { width } = dimentions;
 
   const nextGuessHandler = (direction: "lower" | "greater") => {
     if (
@@ -56,8 +61,45 @@ const GameScreen = ({ number, onGameOver }: GameScreenProps) => {
     }
   }, [currentGuess, number, onGameOver]);
 
+  if (width > 540) {
+    return (
+      <View className="flex-1 pt-24">
+        <Text style={styles.title} className="text-primary">
+          {"Opponent's Guess"}
+        </Text>
+
+        <View
+          style={styles.panel}
+          className="flex-row justify-evenly items-stretch gap-3 h-40"
+        >
+          <Button
+            variant="primary"
+            className="w-24 h-24"
+            onPress={() => nextGuessHandler("lower")}
+          >
+            <Text className="text-2xl text-center">-</Text>
+          </Button>
+
+          <View className="px-4 justify-center rounded border-2 border-primary">
+            <Text className="text-4xl text-primary text-center">
+              {currentGuess}
+            </Text>
+          </View>
+
+          <Button
+            variant="primary"
+            className="w-24 h-24"
+            onPress={() => nextGuessHandler("greater")}
+          >
+            <Text className="text-2xl text-center">+</Text>
+          </Button>
+        </View>
+      </View>
+    );
+  }
+
   return (
-    <View style={styles.container}>
+    <View className="flex-1 pt-64">
       <Text style={styles.title} className="text-primary">
         {"Opponent's Guess"}
       </Text>
@@ -70,14 +112,14 @@ const GameScreen = ({ number, onGameOver }: GameScreenProps) => {
         </View>
         <View className="flex gap-4 flex-row mt-4">
           <Button
-            variant="tonal"
+            variant="primary"
             className="w-12"
             onPress={() => nextGuessHandler("lower")}
           >
             <Text>-</Text>
           </Button>
           <Button
-            variant="tonal"
+            variant="primary"
             className="w-12"
             onPress={() => nextGuessHandler("greater")}
           >
@@ -92,7 +134,6 @@ const GameScreen = ({ number, onGameOver }: GameScreenProps) => {
 export default GameScreen;
 
 const styles = StyleSheet.create({
-  container: { flex: 1, paddingTop: 140 },
   title: {
     fontSize: 40,
     fontWeight: "bold",
