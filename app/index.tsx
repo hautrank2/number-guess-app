@@ -41,6 +41,7 @@ const AppIndex = () => {
       source={require("../assets/images/background.jpg")}
       resizeMode="cover"
       style={styles.screen}
+      imageStyle={styles.backgroundImage}
     >
       {component}
     </ImageBackground>
@@ -52,5 +53,9 @@ export default AppIndex;
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
+  },
+  backgroundImage: {
+    justifyContent: "flex-end",
+    backgroundPosition: "bottom",
   },
 });

@@ -33,7 +33,6 @@ const GameScreen = ({ number, onGameOver }: GameScreenProps) => {
 
   const dimentions = useWindowDimensions();
 
-  console.log(dimentions);
   const { width } = dimentions;
 
   const nextGuessHandler = (direction: "lower" | "greater") => {
@@ -69,7 +68,7 @@ const GameScreen = ({ number, onGameOver }: GameScreenProps) => {
     }
   }, [currentGuess, number, onGameOver]);
 
-  if (width > 540) {
+  if (width > 400) {
     return (
       <View className="flex-1 pt-24">
         <Text style={styles.title} className="text-primary">

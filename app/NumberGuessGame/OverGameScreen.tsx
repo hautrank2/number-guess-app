@@ -1,8 +1,9 @@
 import { Button } from "@/components/nativewindui/Button";
 import { Text } from "@/components/nativewindui/Text";
 import { Title } from "@/components/title";
+import { cn } from "@/lib/cn";
 import React from "react";
-import { Image, StyleSheet, View } from "react-native";
+import { Image, StyleSheet, useWindowDimensions, View } from "react-native";
 
 const overGameImage = require("../../assets/images/over-game.png");
 
@@ -16,15 +17,25 @@ const OverGameScreen = ({
   enterNumber,
   onStartNewGame,
 }: OverGameScreenProps) => {
+  const { width } = useWindowDimensions();
+  const isLargeScreen = width > 400;
   return (
-    <View className="flex-1 pt-24 px-4" style={styles.container}>
+    <View
+      className={cn("flex-1 px-4", isLargeScreen ? "pt-12" : "pt-24")}
+      style={styles.container}
+    >
       <Title>Game Over</Title>
-      <View className="rounded-full border-2 w-80 h-80 overflow-hidden self-center mt-12">
+      <View
+        className={cn(
+          "rounded-full border-2 overflow-hidden self-center mt-12",
+          isLargeScreen ? "w-24 h-24" : "w-80 h-80",
+        )}
+      >
         <Image source={overGameImage} className="w-full h-full" />
       </View>
 
       <View className="mt-4">
-        <Text>
+        <Text className="text-center">
           Your phone needed{" "}
           <Text className="font-bold text-primary">{roundNumber}</Text> roundeds
           to guess the number{" "}
